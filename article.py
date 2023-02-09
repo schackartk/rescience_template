@@ -11,6 +11,7 @@ import yaml
 SUFFIXES = ["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 
 
+# -----------------------------------------------------------------------------
 @dataclass
 class Contributor:
     """Contributor to ReScience submission"""
@@ -27,6 +28,7 @@ class Contributor:
         self.abbrvname = get_abbrvname(self.name)
 
 
+# -----------------------------------------------------------------------------
 @dataclass
 class Affiliation:
     """Contributor affiliation"""
@@ -36,6 +38,7 @@ class Affiliation:
     address: str = ""
 
 
+# -----------------------------------------------------------------------------
 @dataclass
 class Repository:
     """Code repository of submission"""
@@ -46,6 +49,7 @@ class Repository:
     swh: str = ""
 
 
+# -----------------------------------------------------------------------------
 @dataclass
 class Replication:
     """Replication article"""
@@ -56,6 +60,7 @@ class Replication:
     doi: str
 
 
+# -----------------------------------------------------------------------------
 @dataclass
 class Review:
     """Information about reviewing"""
@@ -64,6 +69,7 @@ class Review:
     doi: str
 
 
+# -----------------------------------------------------------------------------
 class Date:
     """Date"""
 
@@ -96,6 +102,7 @@ class Date:
         # return self.date.strftime("%d %B %Y")
 
 
+# -----------------------------------------------------------------------------
 class Article:
     """Information about article"""
 
