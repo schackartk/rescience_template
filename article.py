@@ -17,59 +17,11 @@ class Contributor:
         self.role = role
         self.name = name
         self.fullname = name
-        self.lastname = self.get_lastname(name)
-        self.abbrvname = self.get_abbrvname(name)
+        self.lastname = get_lastname(name)
+        self.abbrvname = get_abbrvname(name)
         self.orcid = orcid
         self.email = email
         self.affiliations = affiliations
-
-    def get_abbrvname(self, name):
-        """
-        Get contributor's abbreviated name
-
-        Arguments:
-        `name`: name as it appears in metadata.yaml
-        """
-        if not name:
-            return ""
-
-        if "," in name:
-            lastname = name.split(",")[0]
-            firstnames = name.split(",")[1].strip().split(" ")
-        else:
-            lastname = name.split(" ")[-1]
-            firstnames = name.split(" ")[:-1]
-            if lastname in SUFFIXES:
-                lastname = " ".join(name.split(" ")[-2:])
-                firstnames = name.split(" ")[:-2]
-        abbrvname = ""
-        for firstname in firstnames:
-            if "-" in firstname:
-                for name in firstname.split("-"):
-                    abbrvname += name[0].strip().upper() + ".-"
-                abbrvname = abbrvname[:-1]
-            else:
-                abbrvname += firstname[0].strip().upper() + "."
-        return abbrvname + " " + lastname
-
-    def get_lastname(self, name):
-        """
-        Get contributor's last name
-
-        Arguments:
-        `name`: name as it appears in metadata.yaml
-        """
-        if not name:
-            return ""
-        # Rougier, Nicolas P.
-        if "," in name:
-            lastname = name.split(",")[0].strip()
-        # Nicolas P. Rougier
-        else:
-            lastname = name.split(" ")[-1]
-            if lastname in SUFFIXES:
-                lastname = " ".join(name.split(" ")[-2:])
-        return lastname
 
 
 class Affiliation:
@@ -338,6 +290,56 @@ class Article:
             self.reviewers.append(contributor)
         else:
             raise IndexError
+
+
+def get_abbrvname(name):
+    """
+    Get contributor's abbreviated name
+
+    Arguments:
+    `name`: name as it appears in metadata.yaml
+    """
+    if not name:
+        return ""
+
+    if "," in name:
+        lastname = name.split(",")[0]
+        firstnames = name.split(",")[1].strip().split(" ")
+    else:
+        lastname = name.split(" ")[-1]
+        firstnames = name.split(" ")[:-1]
+        if lastname in SUFFIXES:
+            lastname = " ".join(name.split(" ")[-2:])
+            firstnames = name.split(" ")[:-2]
+    abbrvname = ""
+    for firstname in firstnames:
+        if "-" in firstname:
+            for name in firstname.split("-"):
+                abbrvname += name[0].strip().upper() + ".-"
+            abbrvname = abbrvname[:-1]
+        else:
+            abbrvname += firstname[0].strip().upper() + "."
+    return abbrvname + " " + lastname
+
+
+def get_lastname(name):
+    """
+    Get contributor's last name
+
+    Arguments:
+    `name`: name as it appears in metadata.yaml
+    """
+    if not name:
+        return ""
+    # Rougier, Nicolas P.
+    if "," in name:
+        lastname = name.split(",")[0].strip()
+    # Nicolas P. Rougier
+    else:
+        lastname = name.split(" ")[-1]
+        if lastname in SUFFIXES:
+            lastname = " ".join(name.split(" ")[-2:])
+    return lastname
 
 
 # -----------------------------------------------------------------------------
