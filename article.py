@@ -182,30 +182,30 @@ class Article:
         self.authors_abbrv = ""  # Abbreviated firsnames + Family names
         self.authors_full = ""  # Full names
 
-        n = len(self.authors)
-        if n > 3:
+        n_authors = len(self.authors)
+        if n_authors > 3:
             self.authors_short = self.authors[0].lastname + " et al."
             self.authors_abbrv = self.authors[0].abbrvname + " et al."
             self.authors_full = self.authors[0].fullname + " et al."
-        elif n == 1:
+        elif n_authors == 1:
             self.authors_short += self.authors[0].lastname
             self.authors_abbrv += self.authors[0].abbrvname
             self.authors_full += self.authors[0].fullname
         else:
-            for i in range(n - 2):
-                self.authors_short += self.authors[i].lastname + ", "
-                self.authors_abbrv += self.authors[i].abbrvname + ", "
-                self.authors_full += self.authors[i].fullname + ", "
+            for author_i in range(n_authors - 2):
+                self.authors_short += self.authors[author_i].lastname + ", "
+                self.authors_abbrv += self.authors[author_i].abbrvname + ", "
+                self.authors_full += self.authors[author_i].fullname + ", "
 
-            if n >= 2:
-                self.authors_short += self.authors[n - 2].lastname + " and "
-                self.authors_short += self.authors[n - 1].lastname
+            if n_authors >= 2:
+                self.authors_short += self.authors[n_authors - 2].lastname + " and "
+                self.authors_short += self.authors[n_authors - 1].lastname
 
-                self.authors_abbrv += self.authors[n - 2].abbrvname + " and "
-                self.authors_abbrv += self.authors[n - 1].abbrvname
+                self.authors_abbrv += self.authors[n_authors - 2].abbrvname + " and "
+                self.authors_abbrv += self.authors[n_authors - 1].abbrvname
 
-                self.authors_full += self.authors[n - 2].fullname + " and "
-                self.authors_full += self.authors[n - 1].fullname
+                self.authors_full += self.authors[n_authors - 2].fullname + " and "
+                self.authors_full += self.authors[n_authors - 1].fullname
 
     def parse(self, data):
         """Parse YAML metadata file"""
