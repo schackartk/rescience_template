@@ -71,7 +71,9 @@ if __name__ == "__main__":
     import argparse
     from article import Article
 
-    # Set to a UTF-8 locale - any non-ascii characters in the metadata in metadata.yaml should be in UTF-8
+    # Set to a UTF-8 locale
+    # Any non-ascii characters in the metadata in metadata.yaml
+    # should be in UTF-8
     locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
     parser = argparse.ArgumentParser(description="YAML to latex converter.")
@@ -95,8 +97,6 @@ if __name__ == "__main__":
 
     filename_in = args.filename_in
     filename_out = args.filename_out
-
-    # print("Generating latex definitions ({1}) from {0}".format(filename_in, filename_out))
 
     with open(filename_in, "r") as file:
         article = Article(file.read())
