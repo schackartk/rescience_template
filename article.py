@@ -70,7 +70,7 @@ class Review:
 
 # -----------------------------------------------------------------------------
 @dataclass
-class Journal_info:
+class JournalInfo:
     """Information about journal and article issue"""
 
     name: str = ""
@@ -142,7 +142,7 @@ class Article:
         self.date_accepted = ""
         self.date_published = ""
 
-        self.journal_info = Journal_info()
+        self.journal_info = JournalInfo()
 
         self.parse(data)
 
