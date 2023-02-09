@@ -13,67 +13,55 @@ SUFFIXES = ["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 
 @dataclass
 class Contributor:
-    """
-    Contributor to ReScience submission
-    """
+    """Contributor to ReScience submission"""
 
-    def __init__(
-        self,
-        role: str,
-        name: str,
-        orcid: str = "",
-        email: str = "",
-        affiliations: Iterable = [],
-    ):
-        self.role = role
-        self.name = name
-        self.fullname = name
-        self.lastname = get_lastname(name)
-        self.abbrvname = get_abbrvname(name)
-        self.orcid = orcid
-        self.email = email
-        self.affiliations = affiliations
+    role: str
+    name: str
+    orcid: str = ""
+    email: str = ""
+    affiliations: Iterable = ()
+
+    def __post_init__(self):
+        self.fullname = self.name
+        self.lastname = get_lastname(self.name)
+        self.abbrvname = get_abbrvname(self.name)
 
 
 @dataclass
 class Affiliation:
     """Contributor affiliation"""
 
-    def __init__(self, code, name, address=""):
-        self.code = code
-        self.name = name
-        self.address = address
+    code: str
+    name: str
+    address: str = ""
 
 
 @dataclass
 class Repository:
     """Code repository of submission"""
 
-    def __init__(self, name: str, url: str, doi: str, swh: str = ""):
-        self.name = name
-        self.url = url
-        self.doi = doi
-        self.swh = swh
+    name: str
+    url: str
+    doi: str
+    swh: str = ""
 
 
 @dataclass
 class Replication:
     """Replication article"""
 
-    def __init__(self, cite: str, bib: str, url: str, doi: str):
-        self.cite = cite
-        self.bib = bib
-        self.url = url
-        self.doi = doi
+    cite: str
+    bib: str
+    url: str
+    doi: str
 
 
 @dataclass
 class Review:
     """Information about reviewing"""
 
-    def __init__(self, url: str, doi: str):
-        self.url = url
-        self.doi = doi
+    url: str
+    doi: str
 
 
 class Date:
