@@ -337,7 +337,7 @@ class Article:
         elif contributor.role == "reviewer":
             self.reviewers.append(contributor)
         else:
-            raise (IndexError)
+            raise IndexError
 
 
 # -----------------------------------------------------------------------------
