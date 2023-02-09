@@ -396,15 +396,11 @@ def get_author_lists(authors: List[Contributor]) -> AuthorLists:
     full = ""  # Full names
 
     n_authors = len(authors)
-    if n_authors > 3:
-        short = authors[0].lastname + " et al."
-        abbrv = authors[0].abbrvname + " et al."
-        full = authors[0].name + " et al."
-    elif n_authors == 1:
+    if n_authors == 1:
         short += authors[0].lastname
         abbrv += authors[0].abbrvname
         full += authors[0].name
-    else:
+    elif n_authors > 1 and n_authors <= 3:
         for author_i in range(n_authors - 2):
             short += authors[author_i].lastname + ", "
             abbrv += authors[author_i].abbrvname + ", "
@@ -419,6 +415,10 @@ def get_author_lists(authors: List[Contributor]) -> AuthorLists:
 
             full += authors[n_authors - 2].name + " and "
             full += authors[n_authors - 1].name
+    else:
+        short = authors[0].lastname + " et al."
+        abbrv = authors[0].abbrvname + " et al."
+        full = authors[0].name + " et al."
 
     return AuthorLists(short, abbrv, full)
 
