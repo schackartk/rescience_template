@@ -90,11 +90,11 @@ class Date:
         try:
             import dateutil.parser
 
-            date = dateutil.parser.parse(date)
-            self.date = date
-            self.year = date.year
-            self.month = date.month
-            self.day = date.day
+            date_time = dateutil.parser.parse(date)
+            self.date = date_time
+            self.year = date_time.year
+            self.month = date_time.month
+            self.day = date_time.day
             self.textual = self.date.strftime("%d %B %Y")
         except:
             import datetime
