@@ -8,6 +8,7 @@ Released under the BSD two-clauses licence
 
 def generate_latex_metadata(filename, article):
     """Generate a LaTeX file of the metadata from YAML"""
+    abstract = article.abstract.replace("&", r"\&")
 
     content = (
         "% DO NOT EDIT - automatically generated from {filename}\n\n"
