@@ -69,6 +69,20 @@ class Review:
 
 
 # -----------------------------------------------------------------------------
+@dataclass
+class Journal_info:
+    """Information about journal and article issue"""
+
+    name: str = ""
+    issn: str = ""
+    volume: str = ""
+    issue: str = ""
+    article_number: str = ""
+    article_doi: str = ""
+    article_url: str = ""
+
+
+# -----------------------------------------------------------------------------
 class Date:
     """Date"""
 
@@ -128,13 +142,7 @@ class Article:
         self.date_accepted = ""
         self.date_published = ""
 
-        self.journal_name = ""
-        self.journal_issn = ""
-        self.journal_volume = ""
-        self.journal_issue = ""
-        self.article_number = ""
-        self.article_doi = ""
-        self.article_url = ""
+        self.journal_info = Journal_info()
 
         self.parse(data)
 
