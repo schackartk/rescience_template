@@ -292,7 +292,8 @@ class Article:
             raise IndexError
 
 
-def get_abbrvname(name):
+# -----------------------------------------------------------------------------
+def get_abbrvname(name: str) -> str:
     """
     Get contributor's abbreviated name
 
@@ -322,7 +323,28 @@ def get_abbrvname(name):
     return abbrvname + " " + lastname
 
 
-def get_lastname(name):
+# -----------------------------------------------------------------------------
+def test_get_lastname() -> None:
+    """Test get_lastname()"""
+
+    # No name
+    assert get_lastname("") == ""
+
+    # Last, First M.I.
+    assert get_lastname("Rougier, Nicolas P.") == "Rougier"
+
+    # First M.I. Last
+    assert get_lastname("Nicolas P. Rougier") == "Rougier"
+
+    # Last Suffix, First M.I.
+    assert get_lastname("Schackart III, Kenneth E.") == "Schackart III"
+
+    # First M.I. Last Suffix
+    assert get_lastname("Kenneth E. Schackart III") == "Schackart III"
+
+
+# -----------------------------------------------------------------------------
+def get_lastname(name: str) -> str:
     """
     Get contributor's last name
 
@@ -331,15 +353,33 @@ def get_lastname(name):
     """
     if not name:
         return ""
-    # Rougier, Nicolas P.
     if "," in name:
         lastname = name.split(",")[0].strip()
-    # Nicolas P. Rougier
     else:
         lastname = name.split(" ")[-1]
         if lastname in SUFFIXES:
             lastname = " ".join(name.split(" ")[-2:])
     return lastname
+
+
+# -----------------------------------------------------------------------------
+def test_get_abbrvname() -> None:
+    """Test get_abbrvname()"""
+
+    # No name
+    assert get_abbrvname("") == ""
+
+    # Last, First M.I.
+    assert get_abbrvname("Rougier, Nicolas P.") == "N.P. Rougier"
+
+    # First M.I. Last
+    assert get_abbrvname("Nicolas P. Rougier") == "N.P. Rougier"
+
+    # Last Suffix, First M.I.
+    assert get_abbrvname("Schackart III, Kenneth E.") == "K.E. Schackart III"
+
+    # First M.I. Last Suffix
+    assert get_abbrvname("Kenneth E. Schackart III") == "K.E. Schackart III"
 
 
 # -----------------------------------------------------------------------------
