@@ -3,13 +3,15 @@ ReScience yaml parser
 Released under the BSD two-clauses licence
 """
 
-import yaml
-
+from dataclasses import dataclass
 from typing import Iterable
+
+import yaml
 
 SUFFIXES = ["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 
 
+@dataclass
 class Contributor:
     """
     Contributor to ReScience submission
@@ -33,6 +35,7 @@ class Contributor:
         self.affiliations = affiliations
 
 
+@dataclass
 class Affiliation:
     """Contributor affiliation"""
 
@@ -42,6 +45,7 @@ class Affiliation:
         self.address = address
 
 
+@dataclass
 class Repository:
     """Code repository of submission"""
 
@@ -52,6 +56,7 @@ class Repository:
         self.swh = swh
 
 
+@dataclass
 class Replication:
     """Replication article"""
 
@@ -62,6 +67,7 @@ class Replication:
         self.doi = doi
 
 
+@dataclass
 class Review:
     """Information about reviewing"""
 
