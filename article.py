@@ -69,6 +69,20 @@ class Review:
 
 
 # -----------------------------------------------------------------------------
+@dataclass
+class Journal_info:
+    """Information about journal and article issue"""
+
+    name: str = ""
+    issn: str = ""
+    volume: str = ""
+    issue: str = ""
+    article_number: str = ""
+    article_doi: str = ""
+    article_url: str = ""
+
+
+# -----------------------------------------------------------------------------
 class Date:
     """Date"""
 
@@ -128,13 +142,7 @@ class Article:
         self.date_accepted = ""
         self.date_published = ""
 
-        self.journal_name = ""
-        self.journal_issn = ""
-        self.journal_volume = ""
-        self.journal_issue = ""
-        self.article_number = ""
-        self.article_doi = ""
-        self.article_url = ""
+        self.journal_info = Journal_info()
 
         self.parse(data)
 
@@ -274,9 +282,9 @@ class Article:
             for article in document["article"]
             for key, value in article.items()
         }
-        self.article_number = article["number"] or ""
-        self.article_doi = article["doi"] or ""
-        self.article_url = article["url"] or ""
+        self.journal_info.article_number = article["number"] or ""
+        self.journal_info.article_doi = article["doi"] or ""
+        self.journal_info.article_url = article["url"] or ""
 
         # Journal volume and issue
         journal = {
@@ -284,10 +292,10 @@ class Article:
             for journal in document["journal"]
             for key, value in journal.items()
         }
-        self.journal_name = str(journal.get("name", ""))
-        self.journal_issn = str(journal.get("issn", ""))
-        self.journal_volume = journal["volume"] or ""
-        self.journal_issue = journal["issue"] or ""
+        self.journal_info.name = str(journal.get("name", ""))
+        self.journal_info.issn = str(journal.get("issn", ""))
+        self.journal_info.volume = journal["volume"] or ""
+        self.journal_info.issue = journal["issue"] or ""
 
     def add_contributor(self, contributor: Contributor):
         """Add contributor based on role"""
