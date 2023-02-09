@@ -5,6 +5,8 @@ Released under the BSD two-clauses licence
 
 import yaml
 
+from typing import Iterable
+
 SUFFIXES = ["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 
 
@@ -13,7 +15,14 @@ class Contributor:
     Contributor to ReScience submission
     """
 
-    def __init__(self, role, name, orcid="", email="", affiliations=[]):
+    def __init__(
+        self,
+        role: str,
+        name: str,
+        orcid: str = "",
+        email: str = "",
+        affiliations: Iterable = [],
+    ):
         self.role = role
         self.name = name
         self.fullname = name
@@ -36,7 +45,7 @@ class Affiliation:
 class Repository:
     """Code repository of submission"""
 
-    def __init__(self, name, url, doi, swh=""):
+    def __init__(self, name: str, url: str, doi: str, swh: str = ""):
         self.name = name
         self.url = url
         self.doi = doi
@@ -46,7 +55,7 @@ class Repository:
 class Replication:
     """Replication article"""
 
-    def __init__(self, cite, bib, url, doi):
+    def __init__(self, cite: str, bib: str, url: str, doi: str):
         self.cite = cite
         self.bib = bib
         self.url = url
@@ -56,7 +65,7 @@ class Replication:
 class Review:
     """Information about reviewing"""
 
-    def __init__(self, url, doi):
+    def __init__(self, url: str, doi: str):
         self.url = url
         self.doi = doi
 
@@ -64,7 +73,7 @@ class Review:
 class Date:
     """Date"""
 
-    def __init__(self, date):
+    def __init__(self, date: str):
         try:
             import dateutil.parser
 
@@ -280,7 +289,7 @@ class Article:
         self.journal_volume = journal["volume"] or ""
         self.journal_issue = journal["issue"] or ""
 
-    def add_contributor(self, contributor):
+    def add_contributor(self, contributor: Contributor):
         """Add contributor based on role"""
         if contributor.role == "author":
             self.authors.append(contributor)
