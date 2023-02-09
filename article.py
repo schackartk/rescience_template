@@ -4,7 +4,7 @@ Released under the BSD two-clauses licence
 """
 
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, List
 
 import yaml
 
@@ -25,6 +25,16 @@ class Contributor:
     def __post_init__(self):
         self.lastname = get_lastname(self.name)
         self.abbrvname = get_abbrvname(self.name)
+
+
+# -----------------------------------------------------------------------------
+@dataclass
+class AuthorLists:
+    """Author short, abbreviated, and full list strings"""
+
+    short: str
+    abbreviated: str
+    full: str
 
 
 # -----------------------------------------------------------------------------
@@ -147,34 +157,10 @@ class Article:
         self.parse(data)
 
         # Build authors list
-        self.authors_short = ""  # Family names only
-        self.authors_abbrv = ""  # Abbreviated firsnames + Family names
-        self.authors_full = ""  # Full names
-
-        n_authors = len(self.authors)
-        if n_authors > 3:
-            self.authors_short = self.authors[0].lastname + " et al."
-            self.authors_abbrv = self.authors[0].abbrvname + " et al."
-            self.authors_full = self.authors[0].name + " et al."
-        elif n_authors == 1:
-            self.authors_short += self.authors[0].lastname
-            self.authors_abbrv += self.authors[0].abbrvname
-            self.authors_full += self.authors[0].name
-        else:
-            for author_i in range(n_authors - 2):
-                self.authors_short += self.authors[author_i].lastname + ", "
-                self.authors_abbrv += self.authors[author_i].abbrvname + ", "
-                self.authors_full += self.authors[author_i].name + ", "
-
-            if n_authors >= 2:
-                self.authors_short += self.authors[n_authors - 2].lastname + " and "
-                self.authors_short += self.authors[n_authors - 1].lastname
-
-                self.authors_abbrv += self.authors[n_authors - 2].abbrvname + " and "
-                self.authors_abbrv += self.authors[n_authors - 1].abbrvname
-
-                self.authors_full += self.authors[n_authors - 2].name + " and "
-                self.authors_full += self.authors[n_authors - 1].name
+        author_lists = get_author_lists(self.authors)
+        self.authors_short = author_lists.short
+        self.authors_abbrv = author_lists.abbreviated
+        self.authors_full = author_lists.full
 
     def parse(self, data):
         """Parse YAML metadata file"""
@@ -397,6 +383,44 @@ def test_get_abbrvname() -> None:
 
     # First M.I. Last Suffix
     assert get_abbrvname("Kenneth E. Schackart III") == "K.E. Schackart III"
+
+
+# -----------------------------------------------------------------------------
+def get_author_lists(authors: List[Contributor]) -> AuthorLists:
+    """
+    Create author list strings from list of author names
+    """
+
+    short = ""  # Family names only
+    abbrv = ""  # Abbreviated firsnames + Family names
+    full = ""  # Full names
+
+    n_authors = len(authors)
+    if n_authors > 3:
+        short = authors[0].lastname + " et al."
+        abbrv = authors[0].abbrvname + " et al."
+        full = authors[0].name + " et al."
+    elif n_authors == 1:
+        short += authors[0].lastname
+        abbrv += authors[0].abbrvname
+        full += authors[0].name
+    else:
+        for author_i in range(n_authors - 2):
+            short += authors[author_i].lastname + ", "
+            abbrv += authors[author_i].abbrvname + ", "
+            full += authors[author_i].name + ", "
+
+        if n_authors >= 2:
+            short += authors[n_authors - 2].lastname + " and "
+            short += authors[n_authors - 1].lastname
+
+            abbrv += authors[n_authors - 2].abbrvname + " and "
+            abbrv += authors[n_authors - 1].abbrvname
+
+            full += authors[n_authors - 2].name + " and "
+            full += authors[n_authors - 1].name
+
+    return AuthorLists(short, abbrv, full)
 
 
 # -----------------------------------------------------------------------------
