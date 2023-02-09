@@ -325,8 +325,8 @@ def get_abbrvname(name: str) -> str:
     abbrvname = ""
     for firstname in firstnames:
         if "-" in firstname:
-            for name in firstname.split("-"):
-                abbrvname += name[0].strip().upper() + ".-"
+            for name_part in firstname.split("-"):
+                abbrvname += name_part[0].strip().upper() + ".-"
             abbrvname = abbrvname[:-1]
         else:
             abbrvname += firstname[0].strip().upper() + "."
