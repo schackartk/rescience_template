@@ -386,9 +386,15 @@ def test_get_abbrvname() -> None:
 
 
 # -----------------------------------------------------------------------------
-if __name__ == "__main__":
+def main() -> None:
+    """Main function"""
     with open("metadata.yaml") as file:
         article = Article(file.read())
         print(article.authors_full)
         print(article.authors_abbrv)
         print(article.authors_short)
+
+
+# -----------------------------------------------------------------------------
+if __name__ == "__main__":
+    main()
