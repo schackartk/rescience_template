@@ -386,39 +386,59 @@ def test_get_abbrvname() -> None:
 
 
 # -----------------------------------------------------------------------------
-def get_author_lists(authors: List[Contributor]) -> AuthorLists:
-    """
-    Create author list strings from list of author names
-    """
+def get_author_list(authors: List[str]) -> str:
+    """Create author list string from list of author names"""
 
-    short = ""  # Family names only
-    abbrv = ""  # Abbreviated firsnames + Family names
-    full = ""  # Full names
+    authors_list = ""
 
     n_authors = len(authors)
     if n_authors == 1:
-        short += authors[0].lastname
-        abbrv += authors[0].abbrvname
-        full += authors[0].name
+        authors_list += authors[0]
     elif n_authors > 1 and n_authors <= 3:
         for author_i in range(n_authors - 2):
-            short += authors[author_i].lastname + ", "
-            abbrv += authors[author_i].abbrvname + ", "
-            full += authors[author_i].name + ", "
-
+            authors_list += authors[author_i] + ", "
         if n_authors >= 2:
-            short += authors[n_authors - 2].lastname + " and "
-            short += authors[n_authors - 1].lastname
-
-            abbrv += authors[n_authors - 2].abbrvname + " and "
-            abbrv += authors[n_authors - 1].abbrvname
-
-            full += authors[n_authors - 2].name + " and "
-            full += authors[n_authors - 1].name
+            authors_list += authors[n_authors - 2] + " and "
+            authors_list += authors[n_authors - 1]
     else:
-        short = authors[0].lastname + " et al."
-        abbrv = authors[0].abbrvname + " et al."
-        full = authors[0].name + " et al."
+        authors_list = authors[0] + " et al."
+
+    return authors_list
+
+
+# -----------------------------------------------------------------------------
+def test_get_author_list() -> None:
+    """Test get_author_list()"""
+
+    # Single author
+    assert get_author_list(["Baggins"]) == "Baggins"
+
+    # Two authors
+    assert get_author_list(["F. Baggins", "S. Gamgee"]) == "F. Baggins and S. Gamgee"
+
+    # Three authors
+    assert (
+        get_author_list(["Frodo Baggins", "Samwise Gamgee", "Merry Brandybuck"])
+        == "Frodo Baggins, Samwise Gamgee and Merry Brandybuck"
+    )
+
+    # More than 3 authors
+    assert (
+        get_author_list(["F. Baggins", "S. Gamgee", "M. Brandybuck", "P. Took"])
+        == "F. Baggins et al."
+    )
+
+
+# -----------------------------------------------------------------------------
+def get_author_lists(authors: List[Contributor]) -> AuthorLists:
+    """
+    Create author list strings (short, abbreviated, and full) from list of
+    author names
+    """
+
+    short = get_author_list([author.lastname for author in authors])
+    abbrv = get_author_list([author.abbrvname for author in authors])
+    full = get_author_list([author.name for author in authors])
 
     return AuthorLists(short, abbrv, full)
 
