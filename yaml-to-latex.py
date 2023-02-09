@@ -60,11 +60,13 @@ def generate_latex_metadata(filename, article):
             affiliations += ",\\orcid{%s}" % author.orcid
         content += "\\author[%s]{%s}\n" % (affiliations, author.name)
 
-    for a in article.affiliations:
-        if len(a.address) > 0:
-            content += "\\affil[{_.code}]{{{_.name}, {_.address}}}\n".format(_=a)
+    for affiliation in article.affiliations:
+        if len(affiliation.address) > 0:
+            content += "\\affil[{_.code}]{{{_.name}, {_.address}}}\n".format(
+                _=affiliation
+            )
         else:
-            content += "\\affil[{_.code}]{{{_.name}}}\n".format(_=a)
+            content += "\\affil[{_.code}]{{{_.name}}}\n".format(_=affiliation)
 
     return content
 
