@@ -1,5 +1,7 @@
-# ReScience yaml parser
-# Released under the BSD two-clauses licence
+"""
+ReScience yaml parser
+Released under the BSD two-clauses licence
+"""
 
 import yaml
 
@@ -7,6 +9,10 @@ SUFFIXES = ["II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 
 
 class Contributor:
+    """
+    Contributor to ReScience submission
+    """
+
     def __init__(self, role, name, orcid="", email="", affiliations=[]):
         self.role = role
         self.name = name
@@ -18,6 +24,12 @@ class Contributor:
         self.affiliations = affiliations
 
     def get_abbrvname(self, name):
+        """
+        Get contributor's abbreviated name
+
+        Arguments:
+        `name`: name as it appears in metadata.yaml
+        """
         if not name:
             return ""
 
@@ -41,6 +53,12 @@ class Contributor:
         return abbrvname + " " + lastname
 
     def get_lastname(self, name):
+        """
+        Get contributor's last name
+
+        Arguments:
+        `name`: name as it appears in metadata.yaml
+        """
         if not name:
             return ""
         # Rougier, Nicolas P.
@@ -55,6 +73,8 @@ class Contributor:
 
 
 class Affiliation:
+    """Contributor affiliation"""
+
     def __init__(self, code, name, address=""):
         self.code = code
         self.name = name
@@ -62,6 +82,8 @@ class Affiliation:
 
 
 class Repository:
+    """Code repository of submission"""
+
     def __init__(self, name, url, doi, swh=""):
         self.name = name
         self.url = url
@@ -70,6 +92,8 @@ class Repository:
 
 
 class Replication:
+    """Replication article"""
+
     def __init__(self, cite, bib, url, doi):
         self.cite = cite
         self.bib = bib
@@ -78,12 +102,16 @@ class Replication:
 
 
 class Review:
+    """Information about reviewing"""
+
     def __init__(self, url, doi):
         self.url = url
         self.doi = doi
 
 
 class Date:
+    """Date"""
+
     def __init__(self, date):
         try:
             import dateutil.parser
@@ -114,6 +142,8 @@ class Date:
 
 
 class Article:
+    """Information about article"""
+
     def __init__(self, data):
         self.title = ""
         self.absract = ""
@@ -178,6 +208,7 @@ class Article:
                 self.authors_full += self.authors[n - 1].fullname
 
     def parse(self, data):
+        """Parse YAML metadata file"""
         document = yaml.load(data, Loader=yaml.SafeLoader)
 
         self.title = document.get("title", "")
@@ -298,6 +329,7 @@ class Article:
         self.journal_issue = journal["issue"] or ""
 
     def add_contributor(self, contributor):
+        """Add contributor based on role"""
         if contributor.role == "author":
             self.authors.append(contributor)
         elif contributor.role == "editor":

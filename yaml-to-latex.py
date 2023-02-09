@@ -1,10 +1,13 @@
-#! /usr/bin/env python3
-# ReScience yaml to latex converter
-# Released under the BSD two-clauses licence
+#!/usr/bin/env python3
+
+"""
+ReScience yaml to latex converter
+Released under the BSD two-clauses licence
+"""
 
 
 def generate_latex_metadata(filename, article):
-    abstract = article.abstract.replace("&", "\&")
+    """Generate a LaTeX file of the metadata from YAML"""
 
     content = (
         "% DO NOT EDIT - automatically generated from {filename}\n\n"
