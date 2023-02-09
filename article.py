@@ -23,7 +23,6 @@ class Contributor:
     affiliations: Iterable = ()
 
     def __post_init__(self):
-        self.fullname = self.name
         self.lastname = get_lastname(self.name)
         self.abbrvname = get_abbrvname(self.name)
 
@@ -148,16 +147,16 @@ class Article:
         if n_authors > 3:
             self.authors_short = self.authors[0].lastname + " et al."
             self.authors_abbrv = self.authors[0].abbrvname + " et al."
-            self.authors_full = self.authors[0].fullname + " et al."
+            self.authors_full = self.authors[0].name + " et al."
         elif n_authors == 1:
             self.authors_short += self.authors[0].lastname
             self.authors_abbrv += self.authors[0].abbrvname
-            self.authors_full += self.authors[0].fullname
+            self.authors_full += self.authors[0].name
         else:
             for author_i in range(n_authors - 2):
                 self.authors_short += self.authors[author_i].lastname + ", "
                 self.authors_abbrv += self.authors[author_i].abbrvname + ", "
-                self.authors_full += self.authors[author_i].fullname + ", "
+                self.authors_full += self.authors[author_i].name + ", "
 
             if n_authors >= 2:
                 self.authors_short += self.authors[n_authors - 2].lastname + " and "
@@ -166,8 +165,8 @@ class Article:
                 self.authors_abbrv += self.authors[n_authors - 2].abbrvname + " and "
                 self.authors_abbrv += self.authors[n_authors - 1].abbrvname
 
-                self.authors_full += self.authors[n_authors - 2].fullname + " and "
-                self.authors_full += self.authors[n_authors - 1].fullname
+                self.authors_full += self.authors[n_authors - 2].name + " and "
+                self.authors_full += self.authors[n_authors - 1].name
 
     def parse(self, data):
         """Parse YAML metadata file"""
