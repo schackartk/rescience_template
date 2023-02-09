@@ -424,6 +424,50 @@ def get_author_lists(authors: List[Contributor]) -> AuthorLists:
 
 
 # -----------------------------------------------------------------------------
+def test_get_author_lists() -> None:
+    """Test get_author_lists()"""
+
+    # Single author
+    authors = [Contributor("author", "Jane Doe")]
+    author_lists = AuthorLists("Doe", "J. Doe", "Jane Doe")
+    assert get_author_lists(authors) == author_lists
+
+    # Two authors
+    authors = [Contributor("author", "Jane Doe"), Contributor("author", "Ben Doe")]
+    author_lists = AuthorLists(
+        "Doe and Doe", "J. Doe and B. Doe", "Jane Doe and Ben Doe"
+    )
+    assert get_author_lists(authors) == author_lists
+
+    # Three authors
+    authors = [
+        Contributor("author", "Jane Doe"),
+        Contributor("author", "Ben Doe"),
+        Contributor("author", "Jerry Ray"),
+    ]
+    author_lists = AuthorLists(
+        "Doe, Doe and Ray",
+        "J. Doe, B. Doe and J. Ray",
+        "Jane Doe, Ben Doe and Jerry Ray",
+    )
+    assert get_author_lists(authors) == author_lists
+
+    # More than 3 authors
+    authors = [
+        Contributor("author", "Jane Doe"),
+        Contributor("author", "Ben Doe"),
+        Contributor("author", "Jerry Ray"),
+        Contributor("author", "Cora Jones"),
+    ]
+    author_lists = AuthorLists(
+        "Doe et al.",
+        "J. Doe et al.",
+        "Jane Doe et al.",
+    )
+    assert get_author_lists(authors) == author_lists
+
+
+# -----------------------------------------------------------------------------
 def main() -> None:
     """Main function"""
     with open("metadata.yaml") as file:
