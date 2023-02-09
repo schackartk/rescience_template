@@ -327,23 +327,23 @@ def get_abbrvname(name: str) -> str:
 
 
 # -----------------------------------------------------------------------------
-def test_get_lastname() -> None:
-    """Test get_lastname()"""
+def test_get_abbrvname() -> None:
+    """Test get_abbrvname()"""
 
     # No name
-    assert get_lastname("") == ""
+    assert get_abbrvname("") == ""
 
     # Last, First M.I.
-    assert get_lastname("Rougier, Nicolas P.") == "Rougier"
+    assert get_abbrvname("Rougier, Nicolas P.") == "N.P. Rougier"
 
     # First M.I. Last
-    assert get_lastname("Nicolas P. Rougier") == "Rougier"
+    assert get_abbrvname("Nicolas P. Rougier") == "N.P. Rougier"
 
     # Last Suffix, First M.I.
-    assert get_lastname("Schackart III, Kenneth E.") == "Schackart III"
+    assert get_abbrvname("Schackart III, Kenneth E.") == "K.E. Schackart III"
 
     # First M.I. Last Suffix
-    assert get_lastname("Kenneth E. Schackart III") == "Schackart III"
+    assert get_abbrvname("Kenneth E. Schackart III") == "K.E. Schackart III"
 
 
 # -----------------------------------------------------------------------------
@@ -366,23 +366,23 @@ def get_lastname(name: str) -> str:
 
 
 # -----------------------------------------------------------------------------
-def test_get_abbrvname() -> None:
-    """Test get_abbrvname()"""
+def test_get_lastname() -> None:
+    """Test get_lastname()"""
 
     # No name
-    assert get_abbrvname("") == ""
+    assert get_lastname("") == ""
 
     # Last, First M.I.
-    assert get_abbrvname("Rougier, Nicolas P.") == "N.P. Rougier"
+    assert get_lastname("Rougier, Nicolas P.") == "Rougier"
 
     # First M.I. Last
-    assert get_abbrvname("Nicolas P. Rougier") == "N.P. Rougier"
+    assert get_lastname("Nicolas P. Rougier") == "Rougier"
 
     # Last Suffix, First M.I.
-    assert get_abbrvname("Schackart III, Kenneth E.") == "K.E. Schackart III"
+    assert get_lastname("Schackart III, Kenneth E.") == "Schackart III"
 
     # First M.I. Last Suffix
-    assert get_abbrvname("Kenneth E. Schackart III") == "K.E. Schackart III"
+    assert get_lastname("Kenneth E. Schackart III") == "Schackart III"
 
 
 # -----------------------------------------------------------------------------
